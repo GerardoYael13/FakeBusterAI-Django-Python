@@ -68,6 +68,18 @@ Las mejoras actuales implementadas en este repositorio incluyen:
 
 ---
 
+## Capturas de pantalla
+
+### Página principal
+
+![Inicio](Screenshots/Home.png)
+
+### Resultado del análisis
+
+![Resultado](Screenshots/resultado.png)
+
+---
+
 ## Características principales
 
 ### 1. Análisis mediante URL
@@ -131,7 +143,7 @@ El proyecto utiliza:
 1. Clonar el repositorio:
 
 ```bash
-git clone <repositorio>
+git clone git clone https://github.com/GerardoYael13/FakeBusterAI-Django-Python.git
 cd FakeBusterAI-Django-Python/
 ```
 
