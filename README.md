@@ -68,6 +68,18 @@ Las mejoras actuales implementadas en este repositorio incluyen:
 
 ---
 
+## Capturas de pantalla
+
+### Página principal
+
+![Inicio](screenshots/home.png)
+
+### Resultado del análisis
+
+![Resultado](screenshots/resultado.png)
+
+---
+
 ## Características principales
 
 ### 1. Análisis mediante URL
