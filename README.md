@@ -72,11 +72,11 @@ Las mejoras actuales implementadas en este repositorio incluyen:
 
 ### Página principal
 
-![Inicio](screenshots/home.png)
+![Inicio](Screenshots/Home.png)
 
 ### Resultado del análisis
 
-![Resultado](screenshots/resultado.png)
+![Resultado](Screenshots/resultado.png)
 
 ---
 
