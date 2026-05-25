@@ -143,7 +143,7 @@ El proyecto utiliza:
 1. Clonar el repositorio:
 
 ```bash
-git clone <repositorio>
+git clone git clone https://github.com/GerardoYael13/FakeBusterAI-Django-Python.git
 cd FakeBusterAI-Django-Python/
 ```
 
