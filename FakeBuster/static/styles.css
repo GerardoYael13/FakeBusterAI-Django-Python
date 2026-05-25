@@ -1,0 +1,155 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle at top,
+    rgba(203,155,222,0.16),
+    transparent 28%),
+
+    linear-gradient(
+    180deg,
+    #181127 0%,
+    #080614 100%);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar{
+    width:100%;
+    padding:20px;
+
+    display:flex;
+    justify-content:center;
+
+    background: linear-gradient(90deg,#0b0218 0%, #1a0033 100%);
+}
+
+.navbar-logo{
+    height:70px;
+}
+
+.main-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:60px 20px;
+}
+
+.card{
+    width:100%;
+    max-width:700px;
+
+    background:rgba(8,6,18,0.88);
+
+    padding:50px;
+
+    border-radius:24px;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+
+    border: 1px solid rgba(203,155,222,0.06);
+
+    text-align:center;
+}
+
+.title{
+    color:white;
+    font-size:2rem;
+    margin-bottom:15px;
+}
+
+.title{
+    color:#f8f7fb;
+    font-size:2rem;
+    margin-bottom:15px;
+}
+.subtitle{
+    color:#e8dcf7;
+    margin-bottom:40px;
+    line-height:1.6;
+}
+.or-divider {
+    margin: 24px auto;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 50%;
+    background: rgba(203,155,222,0.07);
+    color: #f4eaff;
+    text-align: center;
+    font-weight: 700;
+    border: 1px solid rgba(203,155,222,0.18);
+}
+
+.input-url{
+    width:100%;
+    min-height:55px;
+
+    border:none;
+    outline:none;
+
+    border-radius:14px;
+
+    padding:0 20px;
+
+    font-size:1rem;
+
+    margin-bottom:25px;
+
+    background: #f4ecff;
+    color: #1f1b2b;
+}
+
+textarea.input-url {
+    padding:16px 20px;
+    min-height:170px;
+    resize: vertical;
+    line-height:1.6;
+}
+
+.manual-note {
+    color:#cbd5e1;
+    font-size:0.92rem;
+    margin-bottom:16px;
+    text-align:left;
+}
+
+.btn-analizar{
+    width:100%;
+    height:55px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(135deg,#cb9bde,#56008c);
+
+    color:white;
+
+    font-size:1rem;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.btn-analizar:hover{
+    transform:translateY(-2px);
+    opacity:0.95;
+}
+
+.error{
+    color:#f87171;
+    margin-top:20px;
+}

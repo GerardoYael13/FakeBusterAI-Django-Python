@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FakebusterAI</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesResultados.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <img src="{% static 'fakebuster.png' %}" alt="Logo" class="navbar-logo">
+    </nav>
+
+    <br>
+
+    <main>
+
+        <div class="contenedorTodo">
+
+            <div class="contenedor1">
+                <p class="resultado1" id="resultado">
+                    RESULTADOS
+                </p>
+            </div>
+
+            <div class="contenedor2 card">
+
+                <div class="estado" id="estadoBadge">
+                    Análisis general
+                </div>
+
+                <p class="resultado" id="resultadoTexto">
+                    {{ resultado }}
+                </p>
+
+            </div>
+
+            <a href="{% url 'FakeBuster:home' %}">
+                <a href="/" class="enviar">
+                    Volver
+                </a>
+            </a>
+
+        </div>
+
+    </main>
+
+    <script>
+
+    const resultadoTexto =
+        document.getElementById("resultadoTexto")
+        .innerText
+        .toLowerCase();
+
+    const estadoBadge =
+        document.getElementById("estadoBadge");
+
+    if (resultadoTexto.includes("credibilidad: alta")) {
+
+        estadoBadge.textContent =
+            "✅ Probablemente confiable";
+
+        estadoBadge.classList.add("verdadera");
+
+    }
+
+    else if (resultadoTexto.includes("credibilidad: media")) {
+
+        estadoBadge.textContent =
+            "⚠ Requiere verificación";
+
+        estadoBadge.classList.add("dudosa");
+
+    }
+
+    else if (resultadoTexto.includes("credibilidad: baja")) {
+
+        estadoBadge.textContent =
+            "❌ Posiblemente engañosa";
+
+        estadoBadge.classList.add("falso");
+
+    }
+
+    else {
+
+        estadoBadge.textContent =
+            "🔎 Análisis automático";
+
+    }
+
+    </script>
+
+</body>
+</html>

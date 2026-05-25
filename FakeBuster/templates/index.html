@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FakeBuster AI</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <img src="{% static 'fakebuster.png' %}" class="navbar-logo">
+    </nav>
+
+    <main class="main-container">
+
+        <div class="card">
+
+            <h1 class="title">
+                Analizador Inteligente de Credibilidad de Noticias
+            </h1>
+
+            <p class="subtitle">
+                Analiza noticias usando inteligencia artificial
+            </p>
+
+            <form method="post" class="form-section">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="form_id" value="formularioURL">
+
+                <input
+                    type="text"
+                    name="url"
+                    placeholder="Pega aquí la URL de la noticia..."
+                    class="input-url"
+                    required
+                >
+
+                <button type="submit" class="btn-analizar">
+                    Analizar noticia
+                </button>
+
+            </form>
+
+            <div class="or-divider">o</div>
+
+            <form method="post" class="form-section">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="form_id" value="formularioManual">
+
+                <p class="manual-note">
+                    Para obtener resultados más precisos, proporciona el texto completo o un resumen de la noticia. El análisis se basa en el contenido proporcionado y no en búsquedas web en tiempo real.
+                </p>
+
+                <textarea
+                    name="contenido"
+                    placeholder="Pega aquí el texto o un resumen de la noticia..."
+                    class="input-url"
+                    rows="8"
+                >{{ contenido|default:'' }}</textarea>
+
+                <input
+                    type="text"
+                    name="titulo"
+                    placeholder="Título de la noticia"
+                    class="input-url"
+                    value="{{ titulo|default:'' }}"
+                >
+
+                <input
+                    type="text"
+                    name="autor"
+                    placeholder="Autor de la noticia"
+                    class="input-url"
+                    value="{{ autor|default:'' }}"
+                >
+
+                <input
+                    type="date"
+                    name="fecha"
+                    class="input-url"
+                    value="{{ fecha|default:'' }}"
+                >
+
+                <button type="submit" class="btn-analizar">
+                    Analizar manualmente
+                </button>
+
+            </form>
+
+            {% if error %}
+                <p class="error">
+                    {{ error }}
+                </p>
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</body>
+</html>
