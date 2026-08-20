@@ -190,7 +190,7 @@ textarea.input-url {
 }
 
 .btn-loading-text {
-    display: inline-block;
+    display: none;
 }
 
 @keyframes spin {

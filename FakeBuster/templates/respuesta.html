@@ -97,6 +97,7 @@
     const limpiarMarkdown = (texto) => texto
         .replace(/\*\*(.*?)\*\*/g, "$1")
         .replace(/__(.*?)__/g, "$1")
+        .replace(/^#+\s*/gm, "")
         .trim();
 
     const etiquetas = {
@@ -116,7 +117,7 @@
     fuente.split(/\r?\n/).forEach((linea) => {
         const lineaLimpia = limpiarMarkdown(linea);
         const coincidencia = lineaLimpia.match(
-            /^\s*(Credibilidad|Explicación|Señales sospechosas|Conclusión)\s*:\s*(.*)$/i
+            /^\s*(Credibilidad|Explicación|Señales sospechosas|Conclusión)\s*[:\-]?\s*(.*)$/i
         );
 
         if (coincidencia) {
@@ -136,7 +137,7 @@
 
     const resultadoTexto = limpiarMarkdown(fuente);
     const credibilidad = resultadoTexto.match(
-        /credibilidad\s*:\s*(alta|media(?:\s*-\s*(?:alta|baja))?|baja)\b/i
+        /credibilidad\s*[:\-]?\s*(alta|media(?:\s*-\s*(?:alta|baja))?|baja|no\s*determinada)\b/i
     );
 
     if (credibilidad) {
@@ -147,11 +148,15 @@
         } else if (valor === "baja") {
             estadoBadge.textContent = "❌ Posiblemente engañosa";
             estadoBadge.classList.add("falso");
+        } else if (valor === "nodeterminada") {
+            estadoBadge.textContent = "🔎 Análisis automático";
         } else {
             estadoBadge.textContent = "⚠ Requiere verificación";
             estadoBadge.classList.add("dudosa");
         }
-        secciones.credibilidad.textContent = limpiarMarkdown(credibilidad[1]);
+        if (valor !== "nodeterminada") {
+            secciones.credibilidad.textContent = limpiarMarkdown(credibilidad[1]);
+        }
     } else {
         estadoBadge.textContent = "🔎 Análisis automático";
     }
