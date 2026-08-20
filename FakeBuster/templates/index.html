@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FakeBuster AI</title>
+    <meta name="description" content="AI-powered news credibility analyzer. Evaluate news reliability using advanced artificial intelligence.">
+    <meta name="theme-color" content="#181127">
 
-    {% load static %}
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="FakeBuster AI - News Credibility Analyzer">
+    <meta property="og:description" content="Analyze news articles for credibility using AI.">
+    <meta property="og:image" content="{% static 'img/logo.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FakeBuster AI">
+    <meta name="twitter:description" content="AI-powered news credibility analysis">
 
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>FakeBuster AI - News Credibility Analyzer</title>
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/logo.png' %}">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 
     <nav class="navbar">
-        <img src="{% static 'fakebuster.png' %}" class="navbar-logo">
+        <img src="{% static 'img/logo.png' %}" alt="FakeBuster AI Logo" class="navbar-logo">
     </nav>
 
     <main class="main-container">
@@ -34,15 +53,18 @@
                 <input type="hidden" name="form_id" value="formularioURL">
 
                 <input
-                    type="text"
+                    type="url"
                     name="url"
                     placeholder="Pega aquí la URL de la noticia..."
                     class="input-url"
+                    aria-label="URL de la noticia"
                     required
                 >
 
-                <button type="submit" class="btn-analizar">
-                    Analizar noticia
+                <button type="submit" class="btn-analizar" id="btnAnalizar1" aria-label="Analizar noticia desde URL">
+                    <span class="btn-text">Analizar noticia</span>
+                    <span class="btn-loader" aria-hidden="true" style="display: none;"></span>
+                    <span class="btn-loading-text" hidden>Analizando...</span>
                 </button>
 
             </form>
@@ -64,6 +86,7 @@
                     placeholder="Pega aquí el texto o un resumen de la noticia..."
                     class="input-url"
                     rows="8"
+                    aria-label="Contenido de la noticia"
                 >{{ contenido|default:'' }}</textarea>
 
                 <input
@@ -71,6 +94,7 @@
                     name="titulo"
                     placeholder="Título de la noticia"
                     class="input-url"
+                    aria-label="Título de la noticia"
                     value="{{ titulo|default:'' }}"
                 >
 
@@ -79,6 +103,7 @@
                     name="autor"
                     placeholder="Autor de la noticia"
                     class="input-url"
+                    aria-label="Autor de la noticia"
                     value="{{ autor|default:'' }}"
                 >
 
@@ -86,11 +111,14 @@
                     type="date"
                     name="fecha"
                     class="input-url"
+                    aria-label="Fecha de publicación"
                     value="{{ fecha|default:'' }}"
                 >
 
-                <button type="submit" class="btn-analizar">
-                    Analizar manualmente
+                <button type="submit" class="btn-analizar" id="btnAnalizar2" aria-label="Analizar manualmente">
+                    <span class="btn-text">Analizar manualmente</span>
+                    <span class="btn-loader" aria-hidden="true" style="display: none;"></span>
+                    <span class="btn-loading-text" hidden>Analizando...</span>
                 </button>
 
             </form>
@@ -105,5 +133,6 @@
 
     </main>
 
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

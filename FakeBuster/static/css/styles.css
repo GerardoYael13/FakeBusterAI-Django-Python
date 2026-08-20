@@ -17,7 +17,7 @@ body{
     #181127 0%,
     #080614 100%);
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .navbar{
@@ -62,12 +62,6 @@ body{
 }
 
 .title{
-    color:white;
-    font-size:2rem;
-    margin-bottom:15px;
-}
-
-.title{
     color:#f8f7fb;
     font-size:2rem;
     margin-bottom:15px;
@@ -102,11 +96,25 @@ body{
     padding:0 20px;
 
     font-size:1rem;
+    font-family: 'Inter', system-ui, sans-serif;
 
     margin-bottom:25px;
 
     background: #f4ecff;
     color: #1f1b2b;
+    
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-url:focus {
+    outline: 2px solid #cb9bde;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(203, 155, 222, 0.1);
+}
+
+.input-url:focus-visible {
+    outline: 2px solid #cb9bde;
+    outline-offset: 2px;
 }
 
 textarea.input-url {
@@ -138,15 +146,55 @@ textarea.input-url {
 
     font-size:1rem;
     font-weight:bold;
+    font-family: 'Inter', system-ui, sans-serif;
 
     cursor:pointer;
 
-    transition:0.3s;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .btn-analizar:hover{
     transform:translateY(-2px);
     opacity:0.95;
+    box-shadow: 0 8px 24px rgba(86, 0, 140, 0.3);
+}
+
+.btn-analizar:active {
+    transform: translateY(-1px);
+}
+
+.btn-analizar:focus-visible {
+    outline: 2px solid #cb9bde;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(203, 155, 222, 0.2);
+}
+
+.btn-analizar:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-loader {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.btn-loading-text {
+    display: inline-block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .error{

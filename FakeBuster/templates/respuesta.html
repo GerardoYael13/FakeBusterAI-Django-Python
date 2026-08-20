@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FakebusterAI</title>
+    <meta name="description" content="AI-powered news credibility analyzer. Analysis results and credibility assessment.">
+    <meta name="theme-color" content="#181127">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="FakeBuster AI - Analysis Results">
+    <meta property="og:description" content="News credibility analysis results">
+
+    <title>FakeBuster AI - Analysis Results</title>
 
     {% load static %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'stylesResultados.css' %}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/logo.png' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/results.css' %}">
 </head>
 
 <body>
 
     <nav class="navbar">
-        <img src="{% static 'fakebuster.png' %}" alt="Logo" class="navbar-logo">
+        <img src="{% static 'img/logo.png' %}" alt="FakeBuster AI Logo" class="navbar-logo">
     </nav>
 
     <br>
@@ -28,22 +43,40 @@
                 </p>
             </div>
 
-            <div class="contenedor2 card">
+            <div class="contenedor2 card" id="resultadoCard">
 
                 <div class="estado" id="estadoBadge">
                     Análisis general
                 </div>
 
-                <p class="resultado" id="resultadoTexto">
-                    {{ resultado }}
-                </p>
+                <div class="resultado-secciones" aria-live="polite">
+                    <section class="resultado-seccion resultado-credibilidad">
+                        <h2>Credibilidad</h2>
+                        <p id="credibilidadTexto">No determinada</p>
+                    </section>
+
+                    <section class="resultado-seccion">
+                        <h2>Explicación</h2>
+                        <p id="explicacionTexto">No se recibió una explicación.</p>
+                    </section>
+
+                    <section class="resultado-seccion">
+                        <h2>Señales sospechosas</h2>
+                        <p id="senalesTexto">No se detectaron señales importantes.</p>
+                    </section>
+
+                    <section class="resultado-seccion resultado-conclusion">
+                        <h2>Conclusión</h2>
+                        <p id="conclusionTexto">No se recibió una conclusión.</p>
+                    </section>
+                </div>
+
+                <div id="resultadoFuente" hidden>{{ resultado }}</div>
 
             </div>
 
-            <a href="{% url 'FakeBuster:home' %}">
-                <a href="/" class="enviar">
-                    Volver
-                </a>
+            <a href="{% url 'FakeBuster:home' %}" class="enviar">
+                Volver
             </a>
 
         </div>
@@ -52,47 +85,82 @@
 
     <script>
 
-    const resultadoTexto =
-        document.getElementById("resultadoTexto")
-        .innerText
-        .toLowerCase();
+    const fuente = document.getElementById("resultadoFuente").textContent;
+    const estadoBadge = document.getElementById("estadoBadge");
+    const secciones = {
+        credibilidad: document.getElementById("credibilidadTexto"),
+        explicacion: document.getElementById("explicacionTexto"),
+        senales: document.getElementById("senalesTexto"),
+        conclusion: document.getElementById("conclusionTexto")
+    };
 
-    const estadoBadge =
-        document.getElementById("estadoBadge");
+    const limpiarMarkdown = (texto) => texto
+        .replace(/\*\*(.*?)\*\*/g, "$1")
+        .replace(/__(.*?)__/g, "$1")
+        .trim();
 
-    if (resultadoTexto.includes("credibilidad: alta")) {
+    const etiquetas = {
+        credibilidad: "credibilidad",
+        explicacion: "explicación",
+        senales: "señales sospechosas",
+        conclusion: "conclusión"
+    };
+    const contenido = {
+        credibilidad: [],
+        explicacion: [],
+        senales: [],
+        conclusion: []
+    };
+    let seccionActual = null;
 
-        estadoBadge.textContent =
-            "✅ Probablemente confiable";
+    fuente.split(/\r?\n/).forEach((linea) => {
+        const lineaLimpia = limpiarMarkdown(linea);
+        const coincidencia = lineaLimpia.match(
+            /^\s*(Credibilidad|Explicación|Señales sospechosas|Conclusión)\s*:\s*(.*)$/i
+        );
 
-        estadoBadge.classList.add("verdadera");
+        if (coincidencia) {
+            seccionActual = Object.keys(etiquetas).find(
+                (clave) => etiquetas[clave].toLowerCase() === coincidencia[1].toLowerCase()
+            );
+            if (coincidencia[2]) {
+                contenido[seccionActual].push(coincidencia[2]);
+            }
+            return;
+        }
 
+        if (seccionActual && lineaLimpia) {
+            contenido[seccionActual].push(lineaLimpia);
+        }
+    });
+
+    const resultadoTexto = limpiarMarkdown(fuente);
+    const credibilidad = resultadoTexto.match(
+        /credibilidad\s*:\s*(alta|media(?:\s*-\s*(?:alta|baja))?|baja)\b/i
+    );
+
+    if (credibilidad) {
+        const valor = credibilidad[1].toLowerCase().replace(/\s/g, "");
+        if (valor === "alta") {
+            estadoBadge.textContent = "✅ Probablemente confiable";
+            estadoBadge.classList.add("verdadera");
+        } else if (valor === "baja") {
+            estadoBadge.textContent = "❌ Posiblemente engañosa";
+            estadoBadge.classList.add("falso");
+        } else {
+            estadoBadge.textContent = "⚠ Requiere verificación";
+            estadoBadge.classList.add("dudosa");
+        }
+        secciones.credibilidad.textContent = limpiarMarkdown(credibilidad[1]);
+    } else {
+        estadoBadge.textContent = "🔎 Análisis automático";
     }
 
-    else if (resultadoTexto.includes("credibilidad: media")) {
-
-        estadoBadge.textContent =
-            "⚠ Requiere verificación";
-
-        estadoBadge.classList.add("dudosa");
-
-    }
-
-    else if (resultadoTexto.includes("credibilidad: baja")) {
-
-        estadoBadge.textContent =
-            "❌ Posiblemente engañosa";
-
-        estadoBadge.classList.add("falso");
-
-    }
-
-    else {
-
-        estadoBadge.textContent =
-            "🔎 Análisis automático";
-
-    }
+    Object.keys(secciones).forEach((clave) => {
+        if (contenido[clave].length) {
+            secciones[clave].textContent = contenido[clave].join(" ");
+        }
+    });
 
     </script>
 
